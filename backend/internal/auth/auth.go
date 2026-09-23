@@ -160,7 +160,12 @@ func (s *Service) Login(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		SameSite: http.SameSiteLaxMode, // 本机 HTTP 环境不加 Secure（课件 s3）
 	})
-	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
+	// 登录成功即返回授权上下文（用户、角色、班级），与 GET /api/me 同构。
+	var className string
+	if err := s.DB.QueryRow(`SELECT name FROM classes WHERE id = ?`, classID).Scan(&className); err != nil {
+		className = ""
+	}
+	writeJSON(w, http.StatusOK, User{ID: id, Username: username, Role: role, ClassID: classID, ClassName: className})
 }
 
 // Logout 处理 POST /api/logout：删除服务端会话行，旧 Cookie 立即失效。

@@ -14,8 +14,7 @@ export default function LoginPage({ onSuccess }: { onSuccess: (me: Me) => void }
     setBusy(true)
     setError('')
     try {
-      await api.login(username, password)
-      const me = await api.me()
+      const me = await api.login(username, password)
       toast(`欢迎，${me.username}（${me.class_name}）`)
       onSuccess(me)
     } catch (err) {

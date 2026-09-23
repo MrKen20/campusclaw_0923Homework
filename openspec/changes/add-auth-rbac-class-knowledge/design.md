@@ -112,7 +112,7 @@ POST /api/materials (teacher, multipart)
 
 | 方法与路径 | 鉴权 | 说明 |
 | --- | --- | --- |
-| `POST /api/login` | 无 | 校验口令、限流、换发会话；三类失败响应同形 |
+| `POST /api/login` | 无 | 校验口令、限流、换发会话；成功返回用户标识、角色、班级；三类失败响应同形 |
 | `POST /api/logout` | 会话 | 删除服务端会话并清 Cookie |
 | `GET /api/me` | 会话 | 返回用户标识、角色、班级；前端据此决定是否显示上传入口 |
 | `GET /api/materials` | 会话 | 按会话班级过滤的列表与本班搜索 |
