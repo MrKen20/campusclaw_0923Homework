@@ -1,0 +1,34 @@
+schema: spec-driven
+githubCopilot:
+  cloudAgent: true
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+context: |
+  项目：CampusClaw —— 面向中小学的教研智能体。迭代 1 只做认证授权与知识库入库底座。
+  技术栈：React 18 + TypeScript + Vite（前端）、Go + net/http（后端）、MySQL 8.0、Nginx、Docker Compose。
+  约定：规约是契约，无规约不写代码；认证/授权/班级隔离全部在服务端强制执行；
+  跨班访问返回与"不存在"同形的 404；登录态为服务端会话 + HttpOnly Cookie（不用 JWT）；
+  密钥只来自环境变量，缺失即启动失败；单实例部署。
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

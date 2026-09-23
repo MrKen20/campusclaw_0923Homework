@@ -1,0 +1,11 @@
+# 镜像卫生：密钥与本地上传文件不得进入镜像（design.md D5）
+.env
+uploads/
+node_modules
+frontend/dist
+frontend/node_modules
+.git
+.workbuddy
+openspec
+*.md
+!README.md
