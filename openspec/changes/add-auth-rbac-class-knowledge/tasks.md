@@ -4,10 +4,10 @@
 
 ## 1. 项目骨架与配置
 
-- [ ] 1.1 确认仓根 README 含价值/场景/不做三行说明、单实例声明与跨班 404 约定 — verify: 打开 `README.md` 四项齐全且与 proposal Non-goals 一致
-- [ ] 1.2 建立 Go 后端（`backend/cmd/server` + `backend/internal/{config,db,auth,materials,knowledge}`）与前端（`frontend/`，Vite + React 18 + TS）目录骨架，导入与构建不报错 — verify: `cd backend && go build ./...` 与 `cd frontend && npm run build` 均成功
-- [ ] 1.3 配置全部来自环境变量（SESSION_SECRET、DB 凭据、MAX_UPLOAD_BYTES、SESSION_TTL_HOURS、LOGIN_FAIL_LIMIT、预置账号口令等），缺失必需项时启动失败 — verify: 删除 `.env` 后执行启动命令，进程报错退出而非照常启动
-- [ ] 1.4 添加 `.gitignore` 与 `.dockerignore`，排除 `.env` 与 `uploads/`；提交 `.env.example`（列全部必填项、无真实值）— verify: 克隆到干净目录全局搜密钥无结果；镜像内不含 `.env`
+- [x] 1.1 确认仓根 README 含价值/场景/不做三行说明、单实例声明与跨班 404 约定 — verify: 打开 `README.md` 四项齐全且与 proposal Non-goals 一致
+- [x] 1.2 建立 Go 后端（`backend/cmd/server` + `backend/internal/{config,db,auth,materials,knowledge}`）与前端（`frontend/`，Vite + React 18 + TS）目录骨架，导入与构建不报错 — verify: `cd backend && go build ./...` 与 `cd frontend && npm run build` 均成功
+- [x] 1.3 配置全部来自环境变量（SESSION_SECRET、DB 凭据、MAX_UPLOAD_BYTES、SESSION_TTL_HOURS、LOGIN_FAIL_LIMIT、预置账号口令等），缺失必需项时启动失败 — verify: 删除 `.env` 后执行启动命令，进程报错退出而非照常启动
+- [x] 1.4 添加 `.gitignore` 与 `.dockerignore`，排除 `.env` 与 `uploads/`；提交 `.env.example`（列全部必填项、无真实值）— verify: 克隆到干净目录全局搜密钥无结果；镜像内不含 `.env`
 
 ## 2. 数据层与种子
 
