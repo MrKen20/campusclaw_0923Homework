@@ -1,0 +1,53 @@
+# CampusClaw 迭代 1：web + api + db 三容器，仅 web 映射宿主端口。
+# 启动：cp .env.example .env → 填写密钥 → docker compose up --build -d
+services:
+  db:
+    image: mysql:8.0
+    # root 口令随机生成、无人持有；api 只使用下面的普通账号（design.md「配置与启动」）
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?请在 .env 中填写 MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER:?请在 .env 中填写 MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?请在 .env 中填写 MYSQL_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/mysql
+    # 不映射端口：仅在 Compose 内部网络可达（攻击面最小化）
+    restart: unless-stopped
+
+  api:
+    build: ./backend
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET:?请在 .env 中填写 SESSION_SECRET}
+      MYSQL_HOST: db
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      SEED_TEACHER_PASSWORD: ${SEED_TEACHER_PASSWORD:?请在 .env 中填写 SEED_TEACHER_PASSWORD}
+      SEED_STUDENT_PASSWORD: ${SEED_STUDENT_PASSWORD:?请在 .env 中填写 SEED_STUDENT_PASSWORD}
+      MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-1048576}
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:-24}
+      LOGIN_FAIL_LIMIT: ${LOGIN_FAIL_LIMIT:-5}
+      LOGIN_FAIL_WINDOW_SECONDS: ${LOGIN_FAIL_WINDOW_SECONDS:-300}
+      UPLOAD_DIR: /app/uploads
+      API_PORT: "8081"
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      - db
+    # 不单独暴露端口：只经 web 反代访问；应用自身会重试等待 db 就绪（design.md D4）
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.web
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  dbdata:
+  uploads:
