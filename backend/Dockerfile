@@ -1,8 +1,8 @@
 # CampusClaw api（Go）镜像
 FROM golang:1.23-alpine AS build
 WORKDIR /src
-# 国内构建环境可换 GOPROXY；默认走官方代理
-ARG GOPROXY=https://proxy.golang.org,direct
+# 构建环境默认走国内模块代理（可用 --build-arg 覆盖）
+ARG GOPROXY=https://goproxy.cn,direct
 ENV GOPROXY=${GOPROXY}
 COPY go.mod go.sum ./
 RUN go mod download
