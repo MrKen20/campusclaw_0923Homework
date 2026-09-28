@@ -2,6 +2,9 @@
 .env
 uploads/
 
+# 本地作业文档与截图：不入库（本地保留）
+docs/
+
 # 依赖与构建产物
 node_modules/
 frontend/dist/
